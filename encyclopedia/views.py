@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib import messages
 
 from . import util
+from .safematter import ALLOWED_TAGS, ALLOWED_ATTRS
 
 import markdown2
 import random
@@ -31,16 +32,15 @@ def index(request):
 
 
 # Returns data of an entry
-# XSS VULNERABLE; NEED TO FIX
+# Do heavy XSS testing for this view
 def entry(request, title):
     entry = util.get_entry(title)
     if entry:
         markdowner = markdown2.Markdown()
         html = markdowner.convert(entry)
-        """ 
-        html = bleach.clean(html) 
-        """
-        
+        sanitizer = bleach.sanitizer.Cleaner(tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRS, strip=False, strip_comments=False)
+        html = sanitizer.clean(html)
+
         return render(request, "encyclopedia/entry.html", {
             "title": title,
             "html": html

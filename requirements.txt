@@ -4,6 +4,7 @@ Django==3.1.7
 markdown2==2.4.0
 packaging==20.9
 pyparsing==2.4.7
+python-dotenv==0.15.0
 pytz==2021.1
 six==1.15.0
 sqlparse==0.4.1

@@ -7,8 +7,7 @@
 # And obviously env variables
 *.env
 
-# Django specifics 
-wiki/settings.py
+# Django specifics
 *.sqlite3
 
 # Python specifics

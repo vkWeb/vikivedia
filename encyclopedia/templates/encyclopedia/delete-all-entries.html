@@ -1,0 +1,36 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Delete all entries
+{% endblock %}
+
+{% block body %}
+
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <h1>Do you really want to delete all the entries?</h1>
+    <p><strong>Keep in mind that this action cannot be undone.</strong></p>
+    <form action="{% url 'encyclopedia:deleteallentries' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="choice-1">Yes, delete all entries</label>
+            <input type="radio" name="choice" id="choice-1" value="1">
+        </div>
+        <div>
+            <label for="choice-0">No, don't delete</label>
+            <input type="radio" name="choice" id="choice-0" value="0">
+        </div>
+        <div>
+            <input type="submit" value="I'm submitting this in all my consciousness">
+        </div>
+    </form>
+{% endblock %}

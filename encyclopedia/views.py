@@ -18,11 +18,17 @@ print(f"{count}. views.py is run")
 count += 1
 # END_DEBUG
 
+
+def wiki_redirect(request):
+    return HttpResponseRedirect(reverse("encyclopedia:root"))
+
+
 # Homepage view
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
+
 
 # Returns data of an entry
 # XSS VULNERABLE; NEED TO FIX
@@ -31,7 +37,9 @@ def entry(request, title):
     if entry:
         markdowner = markdown2.Markdown()
         html = markdowner.convert(entry)
-        html = bleach.clean(html)
+        """ 
+        html = bleach.clean(html) 
+        """
         
         return render(request, "encyclopedia/entry.html", {
             "title": title,
@@ -39,6 +47,7 @@ def entry(request, title):
         })
 
     raise Http404("Entry not found")
+
 
 # Handle new entry creation
 def new_entry(request):
@@ -90,6 +99,7 @@ def new_entry(request):
     else:
         raise HttpResponseNotAllowed(["GET", "POST"])
 
+
 # Return a random article
 def random_entry(request):
     entries_title = util.list_entries()
@@ -101,6 +111,7 @@ def random_entry(request):
         return HttpResponseRedirect(reverse("encyclopedia:root"))
     else:
         return HttpResponseRedirect(reverse("encyclopedia:wikititle", args=(random_title,)))
+
 
 # Edit an already existing entry
 def edit_entry(request, title):
@@ -146,6 +157,7 @@ def edit_entry(request, title):
     else:
         raise HttpResponseNotAllowed(["GET", "POST"])
 
+
 # Search functionality
 def search(request):
     query = request.GET.get("q").strip().lower()
@@ -167,3 +179,23 @@ def search(request):
                 })
 
     return HttpResponseRedirect(reverse("encyclopedia:root"))
+
+
+def delete_all_entries(request):
+    if request.method == "POST":
+        choice = request.POST.get("choice", False)
+        if choice == False:
+            messages.error(request, "No option was selected. Please select an option.")
+            return HttpResponseRedirect(reverse("encyclopedia:deleteallentries")) 
+        if choice == "0":
+            messages.info(request, "Nothing was deleted on your command, sir!")
+        elif choice == "1":
+            if util.delete_all_entries() == True:
+                messages.success(request, "Deleted all the entries, sad to see them going :(")
+            else:
+                messages.error(request, "No entry exist.")
+        return HttpResponseRedirect(reverse("encyclopedia:root"))
+    elif request.method == "GET":
+        return render(request, "encyclopedia/delete-all-entries.html")
+    else:
+        raise HttpResponseNotAllowed(["GET", "POST"])

@@ -1,0 +1,31 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if is_search %}
+        <h1>Search Results</h1>
+    {% else %}
+        <h1>All Pages</h1>
+    {% endif %}
+        
+    <ul>
+        {% for entrytitle in entries %}
+        <li><a href="{% url 'encyclopedia:wikititle' entrytitle %}">{{ entrytitle }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

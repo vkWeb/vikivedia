@@ -1,0 +1,15 @@
+# VS Code Stuff 
+.vscode
+
+# Virtual env stuff
+*.venv
+
+# And obviously env variables
+*.env
+
+# Django specifics 
+wiki/settings.py
+*.sqlite3
+
+# Python specifics
+__pycache__

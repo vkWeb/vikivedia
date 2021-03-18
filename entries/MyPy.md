@@ -1,0 +1,1 @@
+- **MyPy is cute! :tada:**

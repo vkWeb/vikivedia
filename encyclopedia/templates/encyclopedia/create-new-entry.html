@@ -1,0 +1,43 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if is_edit_entry %}
+        Edit {{ entry_title }} entry
+    {% else %}
+        Create a new entry
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if is_edit_entry %}
+        <h1>Edit {{ entry_title }} entry</h1>
+        <form action="{% url 'encyclopedia:editentry' entry_title %}" method="POST">
+    {% else %}
+        <h1>Create a new entry</h1>
+        <form action="{% url 'encyclopedia:newentry' %}" method="POST">
+    {% endif %}
+    
+        {% csrf_token %}
+        <div>
+            <label for="entry-title">Title of entry: </label>
+            <input type="text" name="entry-title" id="entry-title" value="{{ entry_title }}">
+
+            {% if not is_entry_title_ok %}
+                <p style="color:red"><strong>{{ error_msg.title_error }}</strong></p>
+            {%endif%}
+        </div>
+
+        <div>
+            <div>
+                <label for="entry-md">Content in markdown syntax: </label>
+            </div>
+            
+            <textarea name="entry-content" id="entry-md">{{ entry_content }}</textarea>
+            
+            {% if not is_entry_content %}
+                <p style="color:red"><strong>{{ error_msg.content_error }}</strong></p>
+            {% endif %}
+        </div>
+        <input type="submit" value="Save entry">
+    </form>
+{% endblock %}

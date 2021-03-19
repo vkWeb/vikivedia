@@ -8,6 +8,7 @@ ALLOWED_TAGS = [
     "h6",
     "p",
     "a",
+    "abbr",
     "ul",
     "li",
     "ol",
@@ -32,12 +33,14 @@ ALLOWED_TAGS = [
     "tr",
     "th",
     "td",
-    "img"
+    "img",
+    "acronym"
     ]
 
 # A dict of allowed attributes for specific tags
 ALLOWED_ATTRS = {
     "a": ["href", "mailto"],
+    "img": ["src"],
     "abbr": ["title"],
     "acronym": ["title"]
     }

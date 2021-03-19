@@ -51,12 +51,12 @@ def entry(request, title):
 
 # Handle new entry creation
 def new_entry(request):
-    if request.method == "POST":   
+    if request.method == "POST":
         title = request.POST["entry-title"].strip()
         content = request.POST["entry-content"].strip()
-        
+
         if title and content:
-        
+
             # If we already have an entry then report error to client
             if util.get_entry(title):
                 return render(request, "encyclopedia/create-new-entry.html", {
@@ -70,16 +70,16 @@ def new_entry(request):
                 util.save_entry(title, content)
                 messages.success(request, "Congratulations! You successfully created a new article.")
                 return HttpResponseRedirect(reverse("encyclopedia:wikititle", args=(title,)))
-        
+
         # Either title or content was not provided by the client, report appropriately
         else:
             is_entry_title = True
             is_entry_content = True
-            
+
             if not title:
                 is_entry_title = False
             if not content:
-                is_entry_content = False 
+                is_entry_content = False
 
             return render(request, "encyclopedia/create-new-entry.html", {
                 "is_entry_title_ok": is_entry_title,
@@ -103,7 +103,7 @@ def new_entry(request):
 # Return a random article
 def random_entry(request):
     entries_title = util.list_entries()
-    
+
     try:
         random_title = random.choice(entries_title)
     except IndexError:
@@ -128,14 +128,14 @@ def edit_entry(request, title):
 
     elif request.method == "POST":
         is_title_ok = True
-        is_content = True 
-        POST_title = request.POST["entry-title"].strip() 
+        is_content = True
+        POST_title = request.POST["entry-title"].strip()
         POST_content = request.POST["entry-content"].strip()
-             
+
         if title != POST_title:
             is_title_ok = False
         if not POST_content:
-            is_content = False 
+            is_content = False
 
         if title == POST_title and POST_content:
             util.save_entry(title, POST_content)
@@ -160,7 +160,12 @@ def edit_entry(request, title):
 
 # Search functionality
 def search(request):
-    query = request.GET.get("q").strip().lower()
+    try:
+        query = request.GET.get("q").strip().lower()
+    except AttributeError:
+        messages.info(request, "No search query was provided.")
+        return HttpResponseRedirect(reverse("encyclopedia:root"))
+
     if query:
         entries = util.list_entries()
         result = []
@@ -181,12 +186,13 @@ def search(request):
     return HttpResponseRedirect(reverse("encyclopedia:root"))
 
 
+# Delete all entries functionality
 def delete_all_entries(request):
     if request.method == "POST":
         choice = request.POST.get("choice", False)
         if choice == False:
             messages.error(request, "No option was selected. Please select an option.")
-            return HttpResponseRedirect(reverse("encyclopedia:deleteallentries")) 
+            return HttpResponseRedirect(reverse("encyclopedia:deleteallentries"))
         if choice == "0":
             messages.info(request, "Nothing was deleted on your command, sir!")
         elif choice == "1":

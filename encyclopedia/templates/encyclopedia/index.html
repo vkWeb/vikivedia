@@ -2,7 +2,7 @@
 
 {% block title %}
     Encyclopedia
-{% endblock %}
+{% endblock title %}
 
 {% block body %}
 
@@ -22,10 +22,10 @@
     {% else %}
         <h1>All Pages</h1>
     {% endif %}
-        
+
     <ul>
         {% for entrytitle in entries %}
         <li><a href="{% url 'encyclopedia:wikititle' entrytitle %}">{{ entrytitle }}</a></li>
         {% endfor %}
     </ul>
-{% endblock %}
+{% endblock body %}

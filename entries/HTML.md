@@ -1,5 +1,7 @@
-HTML stands for hyper text markup language.
+**HTML** stands for *hypertext markup language*.
 
-It is used by great people to create awesome websites.
+It is famous because:
 
-Cool.
+- it is cool
+- it is easy to learn
+### See ya brother!

@@ -2,7 +2,7 @@
 
 {% block title %}
     {{ title }}
-{% endblock %}
+{% endblock title %}
 
 {% block body %}
     {% if messages %}
@@ -15,9 +15,9 @@
         </div>
         {% endfor %}
     {% endif %}
-    
+
         <h1>{{ title }}</h1>
         {{ html | safe }}
 
         <p><a href="{% url 'encyclopedia:editentry' title %}">Edit this entry</a></p>
-    {% endblock %}
+    {% endblock body %}

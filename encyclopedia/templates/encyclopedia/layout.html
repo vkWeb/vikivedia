@@ -4,50 +4,51 @@
 <html lang="en">
 
 <head>
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Wiki like encyclopedia.">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
+  <title>{% block title %}{% endblock title %}</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Wiki like encyclopedia.">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
 </head>
 
 <body>
-    <div class="row">
-        <div class="sidebar col-lg-2 col-md-3">
-            <h2>Wiki</h2>
-            <form action="{% url 'encyclopedia:search' %}" method="GET">
-                <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
-            </form>
-            <div>
-                <a href="{% url 'encyclopedia:root' %}">Home</a>
-            </div>
-            <div>
-                <a href="{% url 'encyclopedia:newentry' %}">Create New Page</a>
-            </div>
-            <div>
-                <a href="{% url 'encyclopedia:getrandomentry' %}">Random Page</a>
-            </div>
-            <div>
-                <a href="{% url 'encyclopedia:deleteallentries' %}">Delete all the entries</a>
-            </div>
-        </div>
-
-        <div class="main col-lg-10 col-md-9">
-            {% block body %}
-            {% endblock %}
-        </div>
+  <div class="row">
+    <div class="sidebar col-lg-2 col-md-3">
+      <h2>Wiki</h2>
+      <form action="{% url 'encyclopedia:search' %}" method="GET">
+        <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
+      </form>
+      <div>
+        <a href="{% url 'encyclopedia:root' %}">Home</a>
+      </div>
+      <div>
+        <a href="{% url 'encyclopedia:newentry' %}">Create New Page</a>
+      </div>
+      <div>
+        <a href="{% url 'encyclopedia:getrandomentry' %}">Random Page</a>
+      </div>
+      <div>
+        <a href="{% url 'encyclopedia:deleteallentries' %}">Delete all the entries</a>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+
+    <div class="main col-lg-10 col-md-9">
+      {% block body %}
+      {% endblock body %}
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
